@@ -11,10 +11,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-app = Flask(__name__)
-app.secret_key = os.environ['FLASK_KEY']
+application = Flask(__name__)
+application.secret_key = os.environ['FLASK_KEY']
 
-@app.route('/', methods=('GET','POST'))
+@application.route('/', methods=('GET','POST'))
 def home():
     #lgform = forms.LoginForm()
     #if request.method == 'POST':
@@ -23,5 +23,5 @@ def home():
     #        return redirect(redir)
     return render_template('home.html',) #LoginForm = lgform, SLACK_APP_ID=SLACK_APP_ID)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+#if __name__ == '__main__':
+#    application.run(debug=True)
