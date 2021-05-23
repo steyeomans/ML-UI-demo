@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="{% block description %}{% endblock %}" />
+    <meta name="robots" content="{% block robots %}{% endblock %}" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/project.css" type="text/css">
+    <!--link rel="shortcut icon" href="{{ url_for('static', filename='img/Logo/Logo.ico') }}"-->
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+      
+      <a class="navbar-brand" href="{{ url_for('home') }}">ML DB UI Example</a>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <!--ul class="navbar-nav navbar-right">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Axion</a>
+          </li>
+          < <li class="nav-item">
+            <a class="nav-link" href="#">Baryon</a>
+          </li> -->
+        </ul>
+        <ul class="navbar-nav mr-auto">
+        </ul>
+        <ul class="navbar-nav navbar-right">
+        <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Guide</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+          &nbsp <button type="button" class="btn btn-outline-login my-2 my-sm-0" data-toggle="modal" data-target="#LoginModal">Login/Create Account</button>
+          </ul>
+      </div>
+    </nav>
+    <br>
+    <br>
+    <br>
+    <!-- Modal -->
+{% if LoginForm is defined %}
+<form action="" method="post" novalidate>
+{{ LoginForm.hidden_tag() }}
+<div class="modal fade" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style="max-width: 420px;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Welcome</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>
+          <div class form-label-group>
+            {{ LoginForm.email(type="email", class="form-control", placeholder="email address") }}
+          </div>
+        </p>
+        <p>
+          <div class form-label-group>
+           {{ LoginForm.password(type="password", class="form-control", placeholder="password") }}
+          </div>
+        </p>
+        <p>
+          {{ LoginForm.remember_me() }} {{LoginForm.remember_me.label }}
+        </p>      
+  
+      <p>{{ LoginForm.signin(class="btn btn-outline-login2", style="width:49%") }}
+        {{ LoginForm.newacc(class="btn btn-outline-login2", style="width:49%") }}
+      </p>
+      <a style="font-size: small;text-align: center;display:grid" href="{{ url_for('edit_password_request') }}"> Forgot Password</a>
+      <!--p class="mt-5 mb-3 text-muted text-center">&copy; 2020</p-->
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+{% endif %}
+
+<div class="container">
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-custom" role="alert">{{ message }}</div>
+      {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+    <main role="main" class="container">
+  
+    {% block content %}{% endblock %}
+
+    </main><!-- /.container -->
+
+      <script>
+      $(document).ready(function () {
+          $('select').selectize({
+              sortField: 'text'
+          });
+      });
+      </script>
+</div>  
+</body>
+
+</html>

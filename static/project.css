@@ -1,0 +1,141 @@
+.navbar-dark {
+	background-color:#82018a;
+}
+
+.body {
+	padding-top:40px;
+}
+
+.navbar-brand {
+	font-weight:bold;
+	padding-top: 0;
+	padding-bottom: 0;
+	font-size: x-large;
+}
+
+.navbar-brand .subtitle {
+	font-weight:normal;
+	font-size:0.75rem;
+	display: inline;
+	line-height: 1rem;
+	color: rgba(255,255,255,0.5)
+}
+
+.btn-outline-login {
+	color:#fff;
+	background-color:transparent;
+	background-image:none;
+	border-color:#fff
+}
+
+.btn-outline-login:hover,.btn-outline-login.hover {
+	color:#82018a;
+	background-color:#fff;
+	border-color:#fff
+}
+
+.btn-outline-login:not(:disabled):not(.disabled).active,.btn-outline-login:not(:disabled):not(.disabled):active,.show>.btn-outline-login.dropdown-toggle {
+	color:#82018a;
+	background-color:#fff;
+	border-color:#fff
+}
+
+.btn-outline-login:focus {
+	box-shadow:0 0 0 .1rem
+}
+
+.btn-outline-login2 {
+	color:#82018a;
+	background-color:transparent;
+	background-image:none;
+	border-color:#82018a
+}
+
+.btn-outline-login2:hover,.btn-outline-login2.hover {
+	color:#fff;
+	background-color:#82018a;
+	border-color:#82018a
+}
+
+.btn-outline-login2:not(:disabled):not(.disabled).active,.btn-outline-login2:not(:disabled):not(.disabled):active,.show>.btn-outline-login2.dropdown-toggle {
+	color:#fff;
+	background-color:#82018a;
+	border-color:#82018a
+}
+
+.btn-outline-login2:focus {
+	box-shadow:0 0 0 .1rem
+}
+
+.alert-custom {
+	background-color:#fff;
+	border-color:#82018a;
+	color:#82018a;
+	border-width:medium;
+}
+
+.table-fullwidth {
+	width:100%
+}
+
+.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+   background-color:	rgba(130, 1, 138, 0.05)
+ }
+
+table.dataframe, .dataframe th, .dataframe td {
+border: none;
+border-bottom: 1px solid #c8c8c8;
+border-collapse: collapse;
+padding: 5px;
+margin-bottom: 20px
+}
+
+.home-next-to-128 {
+	height: 128px;
+	padding-top: 25px;
+  }
+
+.form-control {
+	max-width:400px;
+}
+
+.custom-select {
+	max-width:400px;
+}
+
+.select-search {
+	width: 100%;
+	min-width: 200px;
+	max-width: 400px;
+}
+
+/* MARKETING CONTENT
+-------------------------------------------------- */
+
+/* Center align the text within the three columns below the carousel */
+.marketing .col-lg-4 {
+	text-align: center;
+  }
+  .marketing h2 {
+	font-weight: 400;
+  }
+  .marketing .col-lg-4 p {
+	margin-right: .75rem;
+	margin-left: .75rem;
+  }
+  
+  
+  /* Featurettes
+  ------------------------- */
+  
+  .featurette-divider {
+	margin: 5rem 0; /* Space out the Bootstrap <hr> more */
+  }
+  
+  /* Thin out the marketing headings */
+  .featurette-heading {
+	font-weight: 300;
+	line-height: 1;
+	letter-spacing: -.05rem;
+  }
