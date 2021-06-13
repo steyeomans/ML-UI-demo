@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Machine Learning Database Interacting User Interface{% endblock %}
+
+{% block robots %}index,follow{% endblock %}
+
+{% block description %}{% endblock %}
+
+{% block content %}
+<html>
+    <body>
+        <p>
+            Below are the results for different models.  The prediction for the model is shown.
+            Below each model is the r-squared value for the model on the holdout test data, this 
+            is indicative of it's performance on new data.
+        </p>
+        <p>
+            Actual measure: {{ "${:,.0f}".format(entered_pred) }}
+        </p>
+        {% for key, value in pred_dict.items() %}
+            {{ key }} prediction: {{ "${:,.0f}".format(value[0][0]) }} <br>
+            &nbsp; &nbsp; Model accuracy (r-squared) is {{ "{:,.2f}".format(value[1]) }} <br>
+            &nbsp; &nbsp; Model performance on this sample is {{ "${:,.0f}".format(value[2]) }} <br>
+            <br>
+        {% endfor %}
+    </body>
+</html> 
+{% endblock %}
+    
