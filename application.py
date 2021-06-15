@@ -13,7 +13,7 @@ import forms
 from dotenv import load_dotenv
 
 load_dotenv()
-
+print('hello from python')
 application = Flask(__name__)
 application.secret_key = os.environ['FLASK_KEY']
 
