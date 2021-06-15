@@ -7,8 +7,8 @@ from flask import (Flask, request, make_response, json, render_template,
     redirect, url_for, jsonify, Response, flash)
 import numpy as np
 import os
-import connections
-import models
+#import connections
+#import models
 import forms
 from dotenv import load_dotenv
 
@@ -17,12 +17,12 @@ load_dotenv()
 application = Flask(__name__)
 application.secret_key = os.environ['FLASK_KEY']
 
-data = models.Prep_data()
-std_scaler = data.std_scale()
-ols = models.do_OLS(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
-svr = models.do_SVR(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
-rfr = models.do_RFR(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
-mlp = models.do_MLP(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
+data = 1 #models.Prep_data()
+std_scaler = 1 #data.std_scale()
+ols = 1 #models.do_OLS(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
+svr = 1 #models.do_SVR(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
+rfr = 1 #models.do_RFR(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
+mlp = 1 #models.do_MLP(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
 
 @application.route('/', methods=('GET','POST'))
 def home():
