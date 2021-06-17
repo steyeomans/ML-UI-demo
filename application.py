@@ -7,22 +7,31 @@ from flask import (Flask, request, make_response, json, render_template,
     redirect, url_for, jsonify, Response, flash)
 import numpy as np
 import os
+import pickle
 import connections
 import models
+from models import Prep_data
 import forms
 from dotenv import load_dotenv
 
 load_dotenv()
-print('hello from python')
 application = Flask(__name__)
 application.secret_key = os.environ['FLASK_KEY']
 
-data = models.Prep_data()
-std_scaler = data.std_scale()
-ols = models.do_OLS(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
-svr = models.do_SVR(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
-rfr = models.do_RFR(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
-mlp = models.do_MLP(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
+#data = models.Prep_data()
+#std_scaler = data.std_scale()
+#ols = models.do_OLS(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
+#svr = models.do_SVR(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
+#rfr = models.do_RFR(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
+#mlp = models.do_MLP(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
+
+db = connections.DB()
+query = 'select blobject from blob_storage where blob_name = %s'
+data = pickle.loads(db.one(query, params=['data',])[0])
+ols = pickle.loads(db.one(query, params=['ols',])[0])
+svr = pickle.loads(db.one(query, params=['svr',])[0])
+rfr = pickle.loads(db.one(query, params=['rfr',])[0])
+mlp = pickle.loads(db.one(query, params=['mlp',])[0])
 
 @application.route('/', methods=('GET','POST'))
 def home():
@@ -47,7 +56,7 @@ def get_pred():
             input_form.population.data/1000, input_form.avg_occupancy.data
         ]
         new_data = np.reshape(new_data,(1,-1))
-        new_scaled_data = std_scaler.transform(new_data)
+        new_scaled_data = data.std_scaler.transform(new_data)
         pred_dict = {}
         pred_dict['Linear Regression'] = [ols.predict(new_scaled_data)*100000, ols.test_score]
         pred_dict['Support Vector Regression'] = [svr.predict(new_scaled_data)*100000, svr.test_score]
@@ -80,7 +89,7 @@ def test_pred():
         ]
         real_value = input_form.prediction.data
         new_data = np.reshape(new_data,(1,-1))
-        new_scaled_data = std_scaler.transform(new_data)
+        new_scaled_data = data.std_scaler.transform(new_data)
         pred_dict = {}
         pred_dict['Linear Regression'] = [ols.predict(new_scaled_data)*100000, ols.test_score, 
             int((ols.predict(new_scaled_data)*100000)-real_value)]
@@ -104,5 +113,5 @@ def test_pred():
     #return errors if validation does not pass
     return render_template('TestPredEntry.html', input_form=input_form) #LoginForm = lgform, SLACK_APP_ID=SLACK_APP_ID)
 
-#if __name__ == '__main__':
-#    application.run(debug=True)
+if __name__ == '__main__':
+    application.run(debug=True)

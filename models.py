@@ -1,8 +1,11 @@
 """
-Data connection and transformation functions for the app.
+Collects data, trains using various ML methods and persists models to DB.
+
+Data is collected from Scikit-learn's datasets sub-module.
 """
 
-import os
+import connections
+import pickle
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
@@ -26,10 +29,9 @@ class Prep_data:
         self.samples_df = data_df.sample(20)
     
     def std_scale(self):
-        std_scaler = StandardScaler().fit(self.X_train)
-        self.X_train_scaled = std_scaler.transform(self.X_train)
-        self.X_test_scaled = std_scaler.transform(self.X_test)
-        return std_scaler
+        self.std_scaler = StandardScaler().fit(self.X_train)
+        self.X_train_scaled = self.std_scaler.transform(self.X_train)
+        self.X_test_scaled = self.std_scaler.transform(self.X_test)
     
 def do_OLS(X, y, X_test, y_test):
     ols = LinearRegression()
@@ -99,10 +101,16 @@ def do_MLP(X, y, X_test, y_test):
     return mlp
 
 if __name__ == '__main__':
+    db = connections.DB()
     data = Prep_data()
     data.std_scale()
-    do_OLS(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
-    #do_SGD(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
-    do_SVR(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
-    do_RFR(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
-    do_MLP(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
+    upload_dict = {'data':data}
+    upload_dict['ols'] = do_OLS(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
+    #upload_dict['sgd'] = do_SGD(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
+    upload_dict['svr'] = do_SVR(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
+    upload_dict['rfr'] = do_RFR(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
+    upload_dict['mlp'] = do_MLP(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
+    for key, value in upload_dict.items():
+        print(f'Uploading {key}')
+        query = """insert into blob_storage (blob_name, blobject) values (%s,%s) """
+        db.none(query,params=[key,pickle.dumps(value)]) #psycopg2.Binary(value)])
