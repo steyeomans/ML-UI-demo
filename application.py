@@ -5,18 +5,26 @@ with databases and run machine learning operations.
 
 from flask import (Flask, request, make_response, json, render_template, 
     redirect, url_for, jsonify, Response, flash)
+#from flask_login import (current_user, login_user, logout_user, login_required, 
+#    LoginManager)
 import numpy as np
 import os
 import pickle
 import connections
-import models
 from models import Prep_data
+#import user
 import forms
 from dotenv import load_dotenv
 
 load_dotenv()
 application = Flask(__name__)
 application.secret_key = os.environ['FLASK_KEY']
+#login = LoginManager(application)
+#login.login_view = 'login'
+#
+#@login.user_loader
+#def load_user(id):
+#    return user.User(id)
 
 #data = models.Prep_data()
 #std_scaler = data.std_scale()
