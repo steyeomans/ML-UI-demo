@@ -11,7 +11,7 @@ import numpy as np
 import os
 import pickle
 import connections
-from models import Prep_data
+import models
 #import user
 import forms
 from dotenv import load_dotenv
@@ -35,7 +35,7 @@ application.secret_key = os.environ['FLASK_KEY']
 
 db = connections.DB()
 query = 'select blobject from blob_storage where blob_name = %s'
-data = pickle.loads(db.one(query, params=['data',])[0])
+#data = pickle.loads(db.one(query, params=['data',])[0])
 ols = pickle.loads(db.one(query, params=['ols',])[0])
 svr = pickle.loads(db.one(query, params=['svr',])[0])
 rfr = pickle.loads(db.one(query, params=['rfr',])[0])
@@ -59,6 +59,12 @@ def get_pred():
     #        return redirect(redir)
     input_form = forms.MLPredForm()    
     if request.method == 'POST' and input_form.validate():
+        data = models.Prep_data()
+        data.std_scale()
+        #ols = models.do_OLS(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
+        #svr = models.do_SVR(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
+        #rfr = models.do_RFR(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
+        #mlp = models.do_MLP(data.X_train_scaled, data.y_train, data.X_test_scaled, data.y_test)
         new_data = [input_form.med_inc.data/10000, input_form.avg_house_age.data, 
             input_form.avg_rooms.data, input_form.avg_bedrooms.data,
             input_form.population.data/1000, input_form.avg_occupancy.data
@@ -72,6 +78,7 @@ def get_pred():
         pred_dict['Multi Layer Perceptron Regression'] = [mlp.predict(new_scaled_data)*100000, mlp.test_score]
         return render_template('GetPredResults.html', pred_dict=pred_dict) #LoginForm = lgform, SLACK_APP_ID=SLACK_APP_ID)
     elif request.method == 'GET':
+        data = models.Prep_data()
         prefill_data = data.samples_df.sample().to_dict(orient='records')[0]
         input_form.med_inc.data = int(prefill_data['MedInc']*10000)
         input_form.avg_house_age.data = int(prefill_data['HouseAge'])

@@ -14,37 +14,66 @@
         </p>
         <form action="" method="post" novalidate>
             {{ input_form.hidden_tag() }}
-            {{ input_form.med_inc.label}} {{ input_form.med_inc}} 
-            {% for error in input_form.med_inc.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            <br>
-            {{ input_form.avg_house_age.label}} {{ input_form.avg_house_age}}
-            {% for error in input_form.avg_house_age.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            <br>
-            {{ input_form.avg_rooms.label}} {{ input_form.avg_rooms}}
-            {% for error in input_form.avg_rooms.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            <br>
-            {{ input_form.avg_bedrooms.label}} {{ input_form.avg_bedrooms}}
-            {% for error in input_form.avg_bedrooms.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            <br>
-            {{ input_form.population.label}} {{ input_form.population}}
-            {% for error in input_form.population.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            <br>
-            {{ input_form.avg_occupancy.label}} {{ input_form.avg_occupancy}}
-            {% for error in input_form.avg_occupancy.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            <br>
-            {{ input_form.submit(class="btn btn-outline-login2") }}
+            <div class="row">
+                <div class="col-md-4">{{ input_form.med_inc.label}} </div>
+                <div class="col-md-2">
+                    {{ input_form.med_inc}} 
+                    {% for error in input_form.med_inc.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">{{ input_form.avg_house_age.label}} </div>
+                <div class="col-md-2">
+                    {{ input_form.avg_house_age}}
+                    {% for error in input_form.avg_house_age.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">{{ input_form.avg_rooms.label}} </div>
+                <div class="col-md-2">
+                    {{ input_form.avg_rooms}}
+                    {% for error in input_form.avg_rooms.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">{{ input_form.avg_bedrooms.label}} </div>
+                <div class="col-md-2">
+                    {{ input_form.avg_bedrooms}}
+                    {% for error in input_form.avg_bedrooms.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">{{ input_form.population.label}} </div>
+                <div class="col-md-2">
+                {{ input_form.population}}
+                {% for error in input_form.population.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">{{ input_form.avg_occupancy.label}} </div>
+                <div class="col-md-2">
+                {{ input_form.avg_occupancy}}
+                {% for error in input_form.avg_occupancy.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-2">
+                    {{ input_form.submit(class="btn btn-outline-login2") }}
+                </div>
+            </div>
         </form>
     </body>
 </html> 
